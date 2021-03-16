@@ -4,14 +4,26 @@ const path = require('path');
 
 module.exports = function(app) {
 
+  // app.get('/api/workouts', (req, res) => {
+  //   Workouts.find({})
+  //   .then(data => {
+  //     res.json(data)
+  //   })
+
+  // })
+
   app.get('/api/workouts', (req, res) => {
     Workouts.aggregate([
-      { $group: { '$length': { $sum: "$amount" } } }
-     ], (err, result) => {
-
-        return (JSON.stringify(result))
-     }
-     )
+      {$exercises : {}},
+      {$group: {
+          _id : "$_id", 
+          length: {$sum : "$duration"}
+      }}
+  ], function(err, result){
+      console.log(result);
+      return (result)
+  })
+  
 
   })
 
@@ -19,7 +31,6 @@ module.exports = function(app) {
 
     Workouts.create({})
     .then(workout => {
-      console.log(workout);
       res.json(workout)
     })
     .catch(({ message }) => {
@@ -36,7 +47,10 @@ module.exports = function(app) {
 
     console.log("Data: ", req.body)
 
-    Workouts.findByIdAndUpdate(req.params.id,req.body, function(err, result){
+    Workouts.findByIdAndUpdate(req.params.id
+      ,{$push: {"exercises" : req.body}}
+      ,{safe: true, upsert: true, new : true}
+      , function(err, result){
 
         if(err){
             res.send(err)
@@ -51,7 +65,7 @@ module.exports = function(app) {
   app.get('/api/workouts/range', (req, res) => {
 
     res.status(500)
-  }
+  })
 
 // HTML Routes
 
