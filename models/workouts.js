@@ -22,7 +22,7 @@ const Workout = new Schema({
     name: {
         type: String,
         trim: true,
-        required: "Workout name is required!"
+        required: false
     },
     weight: {
         type: Number,
