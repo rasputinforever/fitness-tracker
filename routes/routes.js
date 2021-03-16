@@ -1,22 +1,15 @@
-const express = require('express');
-const Cardio = require('../models/workoutsCardio.js');
-const Resistance = require('../models/workoutsResistance.js');
+
+const Workouts = require('../models/workouts.js');
 const path = require('path');
 
 module.exports = function(app) {
 
   app.get('/api/workouts', (req, res) => {
 
-    Cardio.find({})
-    .then(allCardio => {
+    Workouts.find({})
+    .then(allWorkout => {
 
-      Resistance.find({})
-      .then(allResistance => {
-        res.status(200).json([...allCardio, ...allResistance]);
-      })
-      .catch(err => {
-        res.status(500).json(err);
-      });
+      res.status(200).json(allWorkout);
 
     })
     .catch(err => {
@@ -27,8 +20,8 @@ module.exports = function(app) {
 
   app.post('/api/workouts', (req, res) => {
 
-    console.log("POST api router")
-    res.json();
+
+    res.status(200)
 
   })
 
@@ -36,8 +29,8 @@ module.exports = function(app) {
 
   app.get('/exercise', (req, res) => {
 
-    console.log("Router Connected!")
     res.sendFile(path.join(__dirname, '..', 'public', 'exercise.html'));
+
   })
 
 
