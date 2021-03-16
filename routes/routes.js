@@ -48,6 +48,10 @@ module.exports = function(app) {
   })
 
 
+  app.get('/api/workouts/range', (req, res) => {
+
+    res.status(500)
+  }
 
 // HTML Routes
 
