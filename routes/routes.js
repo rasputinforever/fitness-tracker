@@ -5,16 +5,13 @@ const path = require('path');
 module.exports = function(app) {
 
   app.get('/api/workouts', (req, res) => {
+    Workouts.aggregate([
+      { $group: { '$length': { $sum: "$amount" } } }
+     ], (err, result) => {
 
-    Workouts.find({})
-    .then(allWorkout => {
-
-      res.status(200).json(allWorkout);
-
-    })
-    .catch(err => {
-      res.status(500).json(err);
-    });
+        return (JSON.stringify(result))
+     }
+     )
 
   })
 
@@ -60,7 +57,11 @@ module.exports = function(app) {
 
   })
 
+  app.get('/stats', (req, res) => {
 
+    res.sendFile(path.join(__dirname, '..', 'public', 'stats.html'));
+
+  })
 }
 
   
