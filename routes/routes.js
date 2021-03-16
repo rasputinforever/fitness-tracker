@@ -8,7 +8,15 @@ module.exports = function(app) {
 
     Cardio.find({})
     .then(allCardio => {
-      res.json(allCardio);
+
+      Resistance.find({})
+      .then(allResistance => {
+        res.json([...allCardio, ...allResistance]);
+      })
+      .catch(err => {
+        res.status(202).json(err);
+      });
+      
     })
     .catch(err => {
       res.status(202).json(err);
