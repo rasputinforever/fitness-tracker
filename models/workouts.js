@@ -44,14 +44,15 @@ const Workout = new Schema({
         unique: false,
         required: false
     },
-    
-    created: {
+    day: {
         type: Date,
         default: Date.now
     },
 
-});
+})
 
-const Workouts = mongoose.model("Workout", Workout);
+let Workouts = mongoose.model("Workout", Workout);
+
+
 
 module.exports = Workouts;
