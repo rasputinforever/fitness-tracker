@@ -4,12 +4,32 @@ const Resistance = require('../models/workoutsResistance.js');
 
 module.exports = function(app) {
 
-      // get specific encounter information
-  app.get('/api/:workout', (req, res) => {
+  app.get('/api/workouts', (req, res) => {
+
+    Cardio.find({})
+    .then(allCardio => {
+      res.json(allCardio);
+    })
+    .catch(err => {
+      res.status(202).json(err);
+    });
+
+  })
+
+  app.get('/api/workouts', (req, res) => {
 
     console.log("Router Connected!")
+    res.json();
 
-  }
+  })
+
+  app.get('/exercise', (req, res) => {
+
+    console.log("Router Connected!")
+    res.end();
+  })
+
+
 }
 
   

@@ -2,13 +2,28 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const Cardio = new Schema({
-// Workout {
-        // type (cardio) string x
-        // name string x
-        // distance number
-        // duration number
+    name: {
+        type: String,
+        trim: true,
+        required: "Workout name is required!"
+    },
 
-    // }
+    distance: {
+        type: Number,
+        unique: false,
+        required: true
+    },
+    
+    duration: {
+        type: Number,
+        unique: false,
+        required: true
+    },
+    
+    created: {
+        type: Date,
+        default: Date.now
+    },
 
 });
 
