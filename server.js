@@ -42,7 +42,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // public stuff, which is given
-app.use(express.static("public"));
+app.use('/', express.static('public'));
+
 
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/userdb", { useNewUrlParser: true });
 
