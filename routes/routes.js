@@ -4,8 +4,7 @@ const path = require('path');
 
 module.exports = function(app) {
 
-  app.get('/api/workouts', (req, res) => {
-
+  app.get('/api/workouts/range', (req, res) => {
     Workouts.aggregate([
       {
         "$addFields": {
@@ -25,11 +24,32 @@ module.exports = function(app) {
       });
 
 
-    // Workouts.find({})
-    // .then(data => {
-    //   console.log(data[data.length - 1])
-    //   res.json(data)
-    // })
+
+  })
+
+
+
+
+
+  app.get('/api/workouts', (req, res) => {
+
+    Workouts.aggregate([
+      {
+        "$addFields": {
+          "totalDuration": {
+            "$reduce": {
+              "input": "$exercises",
+              "initialValue": 0,
+              "in": { "$add" : ["$$value", "$$this.duration"] }
+            }
+          }
+        }
+      }
+      ]).exec((err, data) => {  
+          if (err) console.log(err);
+          console.log(data[data.length - 1]);
+          res.json(data) 
+      });
 
   })
   
