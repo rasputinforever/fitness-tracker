@@ -1,1 +1,1 @@
-module.exports.Workout = require('./workouts');
+module.exports.Workouts = require('./workouts');
