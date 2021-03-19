@@ -15,9 +15,6 @@ app.use(express.json());
 // public stuff, which is given
 app.use('/', express.static('public'));
 
-
-// mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workouts", { useNewUrlParser: true });
-
 // from instructions on heroku deploy
 mongoose.connect(
   process.env.MONGODB_URI || 'mongodb://localhost/deep-thoughts',
